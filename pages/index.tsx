@@ -6,6 +6,8 @@ import { Pokemon } from "../entities/Pokemon";
 import styles from "./Home.module.scss";
 import Head from "next/head";
 import Image from "next/image";
+import Lottie from "react-lottie";
+import animation from "../assets/animation.json";
 
 const pokeballSVG = "https://www.svgrepo.com/show/276264/pokeball-pokemon.svg";
 
@@ -23,6 +25,7 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
   const [isOpenId, setIsOpenId] = useState<number | null>(null);
   const [page, setPage] = useState<number>(1);
   const [noData, setNoData] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortStat, setSortStat] = useState<string>("speed");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -37,6 +40,7 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
   const debouncedValue = useRef("");
 
   const getData = async () => {
+    setLoading(true);
     const data = await getPokemonData(window.location.origin, page);
     if (data.length > 0) {
       setNoData(false);
@@ -44,6 +48,7 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
     } else {
       setNoData(true);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -51,6 +56,7 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
   }, [page]);
 
   const searchFunction = async (value) => {
+    setLoading(true);
     const data = await searchPokemon(value);
     if (data.length > 0) {
       setNoData(false);
@@ -58,6 +64,7 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
     } else {
       setNoData(true);
     }
+    setLoading(false);
   };
   useEffect(() => {
     const debounceSearch = () => {
@@ -89,6 +96,14 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
     [sortStat, sortOrder, pokemonData]
   );
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <div
       className={styles.home}
@@ -167,7 +182,12 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
           )}
         </div>
       </div>
-      {!noData ? (
+
+      {loading ? (
+        <div className={styles.loading}>
+          <Lottie options={defaultOptions} height={100} width={100} />
+        </div>
+      ) : !noData ? (
         <div className={styles.pokemonCards}>
           {sortedPokemon.map((pokemon) => (
             <PokemonCard

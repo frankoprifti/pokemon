@@ -59,6 +59,13 @@
     }
   }
 }
+.loading {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .search {
   height: 40px;
   background-color: rgba($color: #fff, $alpha: 0.1);

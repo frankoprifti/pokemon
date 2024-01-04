@@ -1,7 +1,7 @@
 // seed.js
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
+const delay = ms => new Promise(res => setTimeout(res, ms));
 const seedDatabase = async () => {
     const dataToSeed = [
         {
@@ -9987,8 +9987,15 @@ const seedDatabase = async () => {
             ]
         }
     ];
-    dataToSeed.map(async data => {
-        const pokemonData = data;
+    const numberOfItems = dataToSeed.length;
+
+    for (let i = 0; i < numberOfItems; i++) {
+        const pokemonData = dataToSeed[i];
+
+        console.log('waiting');
+        await delay(300);
+        console.log('starting-seed ', i + 1);
+
         const createdPokemon = await prisma.pokemon.create({
             data: {
                 name: pokemonData.name,
@@ -10019,7 +10026,7 @@ const seedDatabase = async () => {
         });
 
         console.log('Pokemon seeded:', createdPokemon);
-    });
+    }
 
 
 };
