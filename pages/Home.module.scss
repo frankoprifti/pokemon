@@ -1,16 +1,71 @@
 .home {
   display: flex;
   flex-direction: column;
+  b {
+    text-align: center;
+  }
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 32px;
+  width: 100%;
+  h1 {
+    width: 20%;
+    padding-left: 32px;
+  }
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+    h1 {
+      text-align: center;
+    }
+    > * {
+      width: 80% !important;
+      &:last-of-type {
+        margin: 12px;
+        justify-content: center;
+      }
+    }
+  }
+  @media screen and (min-width: 426px) and (max-width: 1024px) {
+    flex-wrap: wrap;
+    margin: 20px 0px;
+    h1 {
+      font-size: 20px;
+    }
+    > * {
+      img {
+        width: 16px;
+      }
+      input {
+        font-size: 16px;
+      }
+
+      height: 30px !important;
+      &:last-of-type {
+        margin: 0px;
+      }
+    }
+    .pagination {
+      div {
+        height: 30px !important;
+      }
+    }
+  }
+}
+.search {
+  height: 40px;
+  background-color: rgba($color: #fff, $alpha: 0.1);
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 0px 8px;
+  color: white;
+  width: 33%;
 }
 .pagination {
   display: flex;
   gap: 12px;
+  width: 10%;
   div {
     cursor: pointer;
     width: 40px;
@@ -43,4 +98,8 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+}
+
+.clear {
+  width: 100px !important;
 }
