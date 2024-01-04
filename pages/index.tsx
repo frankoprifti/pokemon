@@ -108,8 +108,8 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
             className={styles.pokeball}
             src={pokeballSVG}
             alt="pokeball"
-            width={24}
-            height={24}
+            width={26}
+            height={26}
           />
           kémon
         </h1>
