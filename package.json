@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.7.1",
     "axios": "^1.6.3",
     "next": "13.4.12",
     "react": "18.2.0",
@@ -16,10 +17,12 @@
     "sass": "^1.69.7"
   },
   "devDependencies": {
-    "@types/node": "20.10.6",
+    "@types/node": "^20.10.6",
     "@types/react": "18.2.46",
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
-    "typescript": "5.3.3"
+    "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

@@ -15,7 +15,7 @@ const PokemonCard: React.FC<{ pokemon: Pokemon }> = ({ pokemon }) => {
       const { left, top } = cardItself.getBoundingClientRect();
       document.addEventListener("mousemove", function (e) {
         const hoverEl = document.getElementById(`hover-effect-${activeId}`);
-        const calcOffset = hoverEl.clientWidth / 2;
+        const calcOffset = hoverEl?.clientWidth / 2;
         if (hoverEl) {
           hoverEl.style.left = e.pageX - left - calcOffset + "px";
           hoverEl.style.top =

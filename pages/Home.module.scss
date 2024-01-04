@@ -1,9 +1,38 @@
 .home {
   display: flex;
   flex-direction: column;
-  h1 {
-    margin-left: 24px;
-    text-align: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 32px;
+}
+.pagination {
+  display: flex;
+  gap: 12px;
+  div {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 8px;
+    background-color: rgba($color: #fff, $alpha: 0.1);
+    transition: all 70ms ease-in;
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.3);
+    }
+  }
+  div[aria-disabled="true"] {
+    opacity: 0.3;
+    cursor: not-allowed;
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.1);
+    }
   }
 }
 .pokeball {
