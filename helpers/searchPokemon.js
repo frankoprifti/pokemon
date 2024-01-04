@@ -26,10 +26,10 @@ export const searchPokemon = async (pokemonName) => {
         if (pokemon.length > 0) {
             return pokemon
         } else
-            return { error: `No Pokémon found with name "${pokemonName}".` }
+            return []
     }
     catch (error) {
-        return { error: `No Pokémon found with name "${pokemonName}".` }
+        return []
     } finally {
         await prisma.$disconnect();
     }

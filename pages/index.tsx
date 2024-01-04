@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import { getPokemonData } from "../endpoints/getPokemonData";
 import { searchPokemon } from "../endpoints/searchPokemon";
 import { Pokemon } from "../entities/Pokemon";
 import styles from "./Home.module.scss";
 import Head from "next/head";
+import Image from "next/image";
 
 const pokeballSVG = "https://www.svgrepo.com/show/276264/pokeball-pokemon.svg";
 
@@ -19,9 +20,19 @@ export async function getServerSideProps({ req }) {
 
 const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
   const [pokemonData, setPokemonData] = useState<Pokemon[]>(data);
+  const [isOpenId, setIsOpenId] = useState<number | null>(null);
   const [page, setPage] = useState<number>(1);
   const [noData, setNoData] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [sortStat, setSortStat] = useState<string>("speed");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const animateReverseCard = () => {
+    const cardItself = document.getElementById(`pokemon-card-${isOpenId}`);
+    if (cardItself) {
+      cardItself.style.translate = `0px 0px`;
+      cardItself.style.scale = `1`;
+    }
+  };
 
   const debouncedValue = useRef("");
 
@@ -50,7 +61,9 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
   };
   useEffect(() => {
     const debounceSearch = () => {
-      searchFunction(debouncedValue.current);
+      if (debouncedValue.current != "") {
+        searchFunction(debouncedValue.current);
+      }
     };
     const debouncedEffect = setTimeout(() => {
       debounceSearch();
@@ -64,8 +77,26 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
     setSearchTerm(e.target.value);
     debouncedValue.current = e.target.value;
   };
+  const sortedPokemon = useMemo(
+    () =>
+      [...pokemonData].sort((a, b) => {
+        const aVal =
+          a.stats[a.stats.findIndex((a) => a.stat.name === sortStat)].base_stat;
+        const bVal =
+          b.stats[b.stats.findIndex((b) => b.stat.name === sortStat)].base_stat;
+        return sortOrder === "asc" ? aVal - bVal : bVal - aVal;
+      }),
+    [sortStat, sortOrder, pokemonData]
+  );
+
   return (
-    <div className={styles.home}>
+    <div
+      className={styles.home}
+      onClick={() => {
+        animateReverseCard();
+        setIsOpenId(null);
+      }}
+    >
       <Head>
         <title>Pokémon</title>
         <link rel="icon" type="image/x-icon" href={pokeballSVG}></link>
@@ -73,15 +104,37 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
       <div className={styles.header}>
         <h1>
           P
-          <img className={styles.pokeball} src={pokeballSVG} alt="pokeball" />
+          <Image className={styles.pokeball} src={pokeballSVG} alt="pokeball" />
           kémon
         </h1>
-        <input
-          className={styles.search}
-          onChange={handleInputChange}
-          placeholder="Search for a Pokemon"
-          value={searchTerm}
-        />
+        <div className={styles.inputAndSorting}>
+          <input
+            className={styles.search}
+            onChange={handleInputChange}
+            placeholder="Search for a Pokemon"
+            value={searchTerm}
+          />
+          <div className={styles.selectWrapper}>
+            <select name="stats" onChange={(e) => setSortStat(e.target.value)}>
+              <option value="speed">Speed</option>
+              <option value="special-defense">Special Defense</option>
+              <option value="special-attack">Special Attack</option>
+              <option value="defense">Defense</option>
+              <option value="attack">Attack</option>
+              <option value="hp">HP</option>
+            </select>
+          </div>
+          <div className={styles.selectWrapper}>
+            <select
+              name="order"
+              onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+              defaultValue={"desc"}
+            >
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
         <div className={styles.pagination}>
           {searchTerm ? (
             <div
@@ -110,12 +163,18 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
       </div>
       {!noData ? (
         <div className={styles.pokemonCards}>
-          {pokemonData.map((pokemon) => (
-            <PokemonCard key={pokemon.id} pokemon={pokemon} />
+          {sortedPokemon.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.id}
+              pokemon={pokemon}
+              sortStat={sortStat}
+              isOpenId={isOpenId}
+              setIsOpenId={setIsOpenId}
+            />
           ))}
         </div>
       ) : (
-        <b>No results for "{searchTerm}"</b>
+        <b>No results for &quot;{searchTerm}&quot;</b>
       )}
     </div>
   );

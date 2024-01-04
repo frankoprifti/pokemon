@@ -10,6 +10,8 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  transition: all 150ms ease-in-out;
+  transform: translate(0px);
   h1 {
     text-transform: capitalize;
     margin: 0px;
@@ -58,11 +60,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 10px;
   div {
     font-size: 8px;
     text-align: center;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
+}
+.highlightedStat {
+  border-radius: 8px;
+  background-size: 100px 150px !important;
 }
 .types {
   display: flex;
@@ -85,4 +92,8 @@
   transition: opacity 150ms ease-in;
   position: absolute;
   z-index: -1;
+}
+.isOpen {
+  background-color: black;
+  z-index: 2;
 }

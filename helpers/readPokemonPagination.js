@@ -26,11 +26,11 @@ export const readPokemonWithPagination = async (page = 1, pageSize = 20) => {
             return paginatedPokemon
 
         } else {
-            return { error: `No Pokémon found.` }
+            return []
 
         }
     } catch (error) {
-        return { error: `Error reading Pokémon: ${error}` }
+        return []
     } finally {
         await prisma.$disconnect();
     }

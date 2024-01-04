@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         const page = req.body.page || 1;
         const data = await readPokemonWithPagination(page)
-        if (!data.error) {
+        if (data.length > 0) {
             res.status(200).json(data)
 
         } else {

@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         const name = req.body.name || '';
         const data = await searchPokemon(name)
-        if (!data.error) {
+        if (data.length > 0) {
             res.status(200).json(data)
 
         } else {
