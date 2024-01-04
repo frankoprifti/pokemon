@@ -12,7 +12,8 @@
     "axios": "^1.6.3",
     "next": "13.4.12",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.69.7"
   },
   "devDependencies": {
     "@types/node": "20.10.6",

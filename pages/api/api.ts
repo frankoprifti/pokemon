@@ -2,9 +2,8 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const body = JSON.parse(req.body);
-    const offset = body.offset || 0;
     if (req.method === 'POST') {
+        const offset = req.body.offset || 0;
         try {
             const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=151`);
             const pokemonUrls = response.data.results.map((pokemon: { url: string }) => pokemon.url);

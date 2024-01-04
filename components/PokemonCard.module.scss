@@ -1,0 +1,88 @@
+.pokemonCard {
+  width: 20%;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  h1 {
+    text-transform: capitalize;
+    margin: 0px;
+    font-size: 18px;
+  }
+  b {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  div[class*=""] {
+    opacity: 0;
+    transition: opacity 50ms linear;
+  }
+  &:hover {
+    div[class*="hoverEffect"] {
+      opacity: 0.3;
+    }
+  }
+  @media screen and (max-width: 425px) {
+    width: 80%;
+  }
+  @media screen and (min-width: 426px) and (max-width: 1024px) {
+    width: 40%;
+  }
+}
+.separator {
+  width: 60%;
+  height: 5px;
+  border-width: 0;
+  border-radius: 60px;
+}
+.pokemonImg {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+.statistics {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.stat {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    font-size: 8px;
+    text-align: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+.types {
+  display: flex;
+  gap: 8px;
+}
+.backgroundColor {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  opacity: 0.1;
+  transition: opacity 150ms ease-in;
+  z-index: -1;
+}
+.hoverEffect {
+  opacity: 0;
+  border-radius: 360px;
+  width: 350%;
+  aspect-ratio: 1;
+  transition: opacity 150ms ease-in;
+  position: absolute;
+  z-index: -1;
+}
