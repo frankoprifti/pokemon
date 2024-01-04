@@ -26,10 +26,13 @@ export const readPokemonWithPagination = async (page = 1, pageSize = 20) => {
             return paginatedPokemon
 
         } else {
+            console.log('29')
+
             return []
 
         }
     } catch (error) {
+        console.log(error, '35')
         return []
     } finally {
         await prisma.$disconnect();
