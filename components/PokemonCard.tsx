@@ -90,6 +90,8 @@ const PokemonCard: React.FC<{
         alt={pokemon.name}
         className={styles.pokemonImg}
         src={`/sprites/${pokemon.id}.svg`}
+        width={220}
+        height={220}
       />
       <h1>{pokemon.name}</h1>
       <hr

@@ -104,7 +104,13 @@ const Home: React.FC = ({ data }: { data: Pokemon[] }) => {
       <div className={styles.header}>
         <h1>
           P
-          <Image className={styles.pokeball} src={pokeballSVG} alt="pokeball" />
+          <Image
+            className={styles.pokeball}
+            src={pokeballSVG}
+            alt="pokeball"
+            width={24}
+            height={24}
+          />
           kémon
         </h1>
         <div className={styles.inputAndSorting}>
